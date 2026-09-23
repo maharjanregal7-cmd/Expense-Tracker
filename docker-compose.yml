@@ -1,0 +1,20 @@
+services:
+  backend:
+    build: ./backend
+    container_name: expense-tracker-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/db.sqlite3:/app/db.sqlite3
+    environment:
+      - DEBUG=True
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: expense-tracker-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
